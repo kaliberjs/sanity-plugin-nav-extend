@@ -1,3 +1,3 @@
 {
-  "extends": "./@kaliber/build/.stylelintrc"
+  "extends": "./ts/node_modules/@kaliber/build/.stylelintrc"
 }
