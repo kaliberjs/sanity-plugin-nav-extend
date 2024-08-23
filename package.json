@@ -1,23 +1,42 @@
 {
-  "name": "@kaliber/library",
+  "name": "@kaliber/sanity-plugin-nav-extend",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Extends the nav bar of Sanity Studio",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaliberjs/sanity-plugin-nav-extend.git"
+  },
   "keywords": [
-    "hello"
-  ],
-  "files": [
-    "index.js",
-    "src/**",
-    "LICENSE",
-    "readme.md",
-    "package.json"
+    "sanity",
+    "sanity-plugin",
+    "duplicate"
   ],
   "private": false,
   "license": "MIT",
-  "description": "A short description",
-  "repository": "https://github.com/kaliberjs/library.git"
+  "author": "Kaliber Machinery <machinery@kaliber.net>",
+  "main": "src/sanityPluginNavExtend.js",
+  "files": [
+    "src/**",
+    "sanity.json",
+    "LICENSE",
+    "package.json",
+    "readme.md",
+    "v2-incompatible.js"
+  ],
+  "dependencies": {
+    "@sanity/incompatible-plugin": "^1.0.4"
+  },
+  "devDependencies": {
+    "@kaliber/build": "^0.0.150"
+  },
+  "peerDependencies": {
+    "@sanity/icons": "^3.3.0",
+    "@sanity/ui": "^2.8.0",
+    "groq": "^3.51.0",
+    "sanity": "^3.51.0"
+  }
 }

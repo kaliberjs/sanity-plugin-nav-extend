@@ -1,3 +1,10 @@
 {
-  "extends": "./node_modules/@kaliber/build/.eslintrc"
+  "root": true,
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "extends": [
+    "./ts/node_modules/@kaliber/build/.eslintrc"
+  ]
 }
