@@ -1,6 +1,6 @@
 {
   "name": "@kaliber/sanity-plugin-nav-extend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extends the nav bar of Sanity Studio",
   "sideEffects": false,
   "publishConfig": {
