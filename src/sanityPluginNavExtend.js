@@ -164,7 +164,7 @@ function useProfileContextValue({ defaultValue, options, profileKey, clientConfi
 
     try {
       await client.createOrReplace({
-        _id: `profile${currentUser.id}`,
+        _id: `drafts.profile${currentUser.id}`,
         _type: 'profile',
         [profileKey]: value
       })
