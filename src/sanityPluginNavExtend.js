@@ -71,7 +71,7 @@ const themingEnvOptions = {
 
 function CurrentEnvBlock() {
   const { dataset: currentEnv } = useWorkspace()
-  const [, tone = 'default'] = Object.entries(themingEnvOptions).find(([env]) => env.startsWith(currentEnv)) || []
+  const [, tone = 'default'] = Object.entries(themingEnvOptions).find(([env]) => currentEnv.startsWith(env)) || []
 
   return (
     <Badge radius={0} padding={3} fontSize={1} {...{ tone }}>
