@@ -98,7 +98,7 @@ function ContextSwitch({ defaultValue, options, profileKey, clientConfig, report
     <ToastProvider>
       <MenuButton
         id='menu-button-context-switch'
-        popover={{ portal: true }}
+        popover={{ portal: true, animate: true, overflow: 'auto', preventOverflow: false }}
         button={<Button
           mode='bleed'
           tone='default'
@@ -108,17 +108,24 @@ function ContextSwitch({ defaultValue, options, profileKey, clientConfig, report
           aria-label='Switch profile context'
         />}
         menu={(
-          <Menu>
-            {options.map(({ id, label, icon }) => (
-              <MenuItem
-                key={`ContextSwitch-item__${id}`}
-                type='button'
-                text={label}
-                selected={profileContextValue === id}
-                onClick={() => setProfileContextValue({ value: id })}
-                {...{ icon }}
-              />
-            ))}
+          <Menu style={{ maxHeight: '80svh' }}>
+            {options.map(({ id, label, icon }) => {
+              const isActive = profileContextValue === id
+
+              return (
+                <MenuItem
+                  key={`ContextSwitch-item__${id}`}
+                  type='button'
+                  paddingX={3}
+                  paddingY={2}
+                  text={label}
+                  selected={isActive}
+                  disabled={isActive}
+                  onClick={() => setProfileContextValue({ value: id })}
+                  {...{ icon }}
+                />
+              )
+            })}
           </Menu>
         )}
       />
