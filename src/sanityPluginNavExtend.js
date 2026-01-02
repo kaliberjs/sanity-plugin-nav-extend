@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators'
 import { useObservable } from 'react-rx'
 import groq from 'groq'
 
+/** @import { PluginFactory, NavbarProps } from 'sanity' */
+
 /**
  * @typedef {Object} ContextOption
  * @property {string} id - The identifier (e.g., 'en', 'en_US').
@@ -18,11 +20,19 @@ import groq from 'groq'
 
  * @typedef {Object} Options
  * @property {ContextSwitch} [contextSwitch] - An optional context switch configuration. If not defined, no context switch will be shown.
- * @property {object} clientConfig - The client configuration object.
- * @property {(e: Error) => void} reportError - A required error reporting function.
+ * @property {{
+ *   sanity: {
+ *     clients: {
+ *       studio: {
+ *         apiVersion: string
+ *       }
+ *     }
+ *   }
+ * }} clientConfig - The client configuration object.
+ * @property {(e: unknown) => void} reportError - A required error reporting function.
  */
 export const sanityPluginNavExtend = definePlugin(
-  /** @type {import('sanity').PluginFactory<Options>} */
+  /** @type {PluginFactory<Options>} */
   ({ contextSwitch, clientConfig, reportError }) => ({
     name: 'sanity-plugin-nav-extend',
 
@@ -34,8 +44,15 @@ export const sanityPluginNavExtend = definePlugin(
   })
 )
 
+/**
+ * @arg {{
+ *   contextSwitch?: ContextSwitch,
+ *   clientConfig: Options['clientConfig'],
+ *   reportError: Options['reportError'],
+ * } & NavbarProps} props
+ */
 function NavbarExtended({ contextSwitch, clientConfig, reportError, renderDefault, ...restProps }) {
-  const showContextSwitch = Boolean(contextSwitch?.options?.length)
+  const showContextSwitch = isValidContextSwitch(contextSwitch)
 
   return (
     <Stack>
@@ -53,10 +70,13 @@ function NavbarExtended({ contextSwitch, clientConfig, reportError, renderDefaul
         </Flex>
       </Card>
 
-      {renderDefault(restProps)}
+      {renderDefault({ renderDefault, ...restProps })}
     </Stack>
   )
 }
+
+/** @arg {ContextSwitch | undefined} x @returns {x is ContextSwitch} */
+function isValidContextSwitch(x) { return Boolean(x?.options?.length) }
 
 /**
  * @typedef {import('@sanity/ui').BadgeTone} BadgeTone
@@ -80,6 +100,15 @@ function CurrentEnvBlock() {
   )
 }
 
+/**
+ * @arg {{
+ *   defaultValue: ContextSwitch['defaultValue'],
+ *   options: ContextSwitch['options'],
+ *   profileKey: ContextSwitch['profileKey'],
+ *   clientConfig: Options['clientConfig'],
+ *   reportError: Options['reportError'],
+ * }} props
+ */
 function ContextSwitch({ defaultValue, options, profileKey, clientConfig, reportError }) {
   const [profileContextValue, setProfileContextValue] = useProfileContextValue({
     defaultValue,
@@ -133,6 +162,15 @@ function ContextSwitch({ defaultValue, options, profileKey, clientConfig, report
   )
 }
 
+/**
+ * @arg {{
+ *   defaultValue: ContextSwitch['defaultValue'],
+ *   options: ContextSwitch['options'],
+ *   profileKey: ContextSwitch['profileKey'],
+ *   clientConfig: Options['clientConfig'],
+ *   reportError: Options['reportError'],
+ * }} props
+ */
 function useProfileContextValue({ defaultValue, options, profileKey, clientConfig, reportError }) {
   const toast = useToast()
   const documentStore = useDocumentStore()
@@ -146,7 +184,7 @@ function useProfileContextValue({ defaultValue, options, profileKey, clientConfi
         documentStore
           .listenQuery(
             groq`*[_type == 'profile' && _id in $ids] | order(_updatedAt desc)[0]`,
-            { ids: [`drafts.profile${currentUser.id}`, `profile${currentUser.id}`] },
+            { ids: [`drafts.profile${currentUser?.id}`, `profile${currentUser?.id}`] },
             {}
           )
           .pipe(
@@ -154,11 +192,12 @@ function useProfileContextValue({ defaultValue, options, profileKey, clientConfi
               profile => profile?.[profileKey] || defaultValue
             ),
           ),
-      [documentStore, defaultValue, profileKey, currentUser.id],
+      [documentStore, defaultValue, profileKey, currentUser?.id],
     ),
     defaultValue,
   )
 
+  /** @arg {{ value: any }} props */
   async function setProfileContextValue({ value }) {
     const label = options?.find(x => x.id === value)?.label
 
@@ -171,7 +210,7 @@ function useProfileContextValue({ defaultValue, options, profileKey, clientConfi
 
     try {
       await client.createOrReplace({
-        _id: `drafts.profile${currentUser.id}`,
+        _id: `drafts.profile${currentUser?.id}`,
         _type: 'profile',
         [profileKey]: value
       })

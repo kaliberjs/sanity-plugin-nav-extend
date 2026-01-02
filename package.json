@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "Extends the nav bar of Sanity Studio",
   "sideEffects": false,
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -18,25 +19,29 @@
   "private": false,
   "license": "MIT",
   "author": "Kaliber Machinery <machinery@kaliber.net>",
-  "main": "src/sanityPluginNavExtend.js",
+  "main": "index.js",
   "files": [
+    "index.js",
     "src/**",
-    "sanity.json",
     "LICENSE",
     "package.json",
-    "readme.md",
-    "v2-incompatible.js"
+    "readme.md"
   ],
-  "dependencies": {
-    "@sanity/incompatible-plugin": "^1.0.4"
-  },
-  "devDependencies": {
-    "@kaliber/build": "^0.0.150"
+  "scripts": {
+    "postinstall": "[ -d ./scripts -a -f ./scripts/install-peer-dependencies-for-typescript.js ] && node ./scripts/install-peer-dependencies-for-typescript.js || true"
   },
   "peerDependencies": {
-    "@sanity/icons": "^3.3.0",
-    "@sanity/ui": "^2.8.0",
-    "groq": "^3.51.0",
-    "sanity": "^3.51.0"
+    "@sanity/icons": "^3.0.0",
+    "@sanity/ui": "^3.0.0",
+    "groq": "*",
+    "react": "^18.0.0",
+    "react-rx": "^4.0.0",
+    "rxjs": "^7.0.0",
+    "sanity": "^4.0.0"
+  },
+  "devDependencies": {
+    "@kaliber/eslint-plugin": "^1.0.0",
+    "@types/node": "^22.19.2",
+    "@types/react": "^18.3.27"
   }
 }

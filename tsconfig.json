@@ -1,20 +1,29 @@
 {
-  "typeAcquisition": {
-    "enable": true
-  },
-  "include": ["./src/**/*", "./types/**/*"],
+  "include": [
+    "./scripts/**/*",
+    "./src/**/*",
+    "./types/**/*"
+  ],
   "compilerOptions": {
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "esnext"],
-    "jsx": "react",
-    "baseUrl": ".",
+    "allowUmdGlobalAccess": true,
+    "allowImportingTsExtensions": true,
+    "maxNodeModuleJsDepth": 3,
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "jsx": "react-jsx",
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
+    "strict": true,
     "paths": {
-      "*": ["ts/node_modules/*"]
+      "*": ["./node_modules/@types/*", "./typescript/node_modules/*"],
+      "sanity/*": ["./typescript/node_modules/sanity/lib/*"]
     }
   }
 }

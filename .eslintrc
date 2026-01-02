@@ -1,10 +1,17 @@
 {
-  "root": true,
-  "env": {
-    "node": true,
-    "browser": true
+  "extends": "./node_modules/@kaliber/eslint-plugin/.eslintrc",
+  "rules": {
+    "@kaliber/no-relative-parent-import": "off"
   },
-  "extends": [
-    "./ts/node_modules/@kaliber/build/.eslintrc"
-  ]
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
+          "node_modules",
+          "typescript/node_modules"
+        ]
+      },
+      "@kaliber/eslint-plugin/lib/absolute-path-resolver-plugin": null
+    }
+  }
 }
