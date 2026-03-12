@@ -47,6 +47,7 @@ defineConfig({
       sanityPluginNavExtend({
         contextSwitch: {
           profileKey: 'language',
+          schemaType: '', // optionally overwrite schema type, default 'profile'
           options: Object.values(clientConfig.multiLanguage.languages).map(
             ({ flagIcon, title, language }) => ({
               id: language,

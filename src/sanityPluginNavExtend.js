@@ -15,6 +15,7 @@ import groq from 'groq'
  * @property {string} defaultValue - The default value.
  * @property {ContextOption[]} options - An array of context options, each containing `id`, `label`, and optionally `icon`.
  * @property {string} profileKey - The key used to store the selected context in the user's profile.
+ * @property {string} schemaType - Overwrite schema type, default 'profile'
 
  * @typedef {Object} Options
  * @property {ContextSwitch} [contextSwitch] - An optional context switch configuration. If not defined, no context switch will be shown.
@@ -46,6 +47,7 @@ function NavbarExtended({ contextSwitch, clientConfig, reportError, renderDefaul
               defaultValue={contextSwitch.defaultValue}
               options={contextSwitch.options}
               profileKey={contextSwitch.profileKey}
+              schemaType={contextSwitch.schemaType || 'profile'}
               {...{ clientConfig, reportError }}
             />
           )}
@@ -80,11 +82,12 @@ function CurrentEnvBlock() {
   )
 }
 
-function ContextSwitch({ defaultValue, options, profileKey, clientConfig, reportError }) {
+function ContextSwitch({ defaultValue, options, profileKey, schemaType, clientConfig, reportError }) {
   const [profileContextValue, setProfileContextValue] = useProfileContextValue({
     defaultValue,
     options,
     profileKey,
+    schemaType,
     clientConfig,
     reportError
   })
@@ -133,7 +136,7 @@ function ContextSwitch({ defaultValue, options, profileKey, clientConfig, report
   )
 }
 
-function useProfileContextValue({ defaultValue, options, profileKey, clientConfig, reportError }) {
+function useProfileContextValue({ defaultValue, options, profileKey, schemaType, clientConfig, reportError }) {
   const toast = useToast()
   const documentStore = useDocumentStore()
   const currentUser = useCurrentUser()
@@ -145,8 +148,8 @@ function useProfileContextValue({ defaultValue, options, profileKey, clientConfi
       () =>
         documentStore
           .listenQuery(
-            groq`*[_type == 'profile' && _id in $ids] | order(_updatedAt desc)[0]`,
-            { ids: [`drafts.profile${currentUser.id}`, `profile${currentUser.id}`] },
+            groq`*[_type == $schemaType && _id in $ids] | order(_updatedAt desc)[0]`,
+            { ids: [`drafts.${schemaType}${currentUser.id}`, `${schemaType}${currentUser.id}`], schemaType },
             {}
           )
           .pipe(
@@ -171,8 +174,8 @@ function useProfileContextValue({ defaultValue, options, profileKey, clientConfi
 
     try {
       await client.createOrReplace({
-        _id: `drafts.profile${currentUser.id}`,
-        _type: 'profile',
+        _id: `drafts.${schemaType}${currentUser.id}`,
+        _type: schemaType,
         [profileKey]: value
       })
 
