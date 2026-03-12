@@ -15,7 +15,7 @@ import groq from 'groq'
  * @property {string} defaultValue - The default value.
  * @property {ContextOption[]} options - An array of context options, each containing `id`, `label`, and optionally `icon`.
  * @property {string} profileKey - The key used to store the selected context in the user's profile.
- * @property {string} schemaType - Overwrite schema type, default 'profile'
+ * @property {string} [schemaType] - Overwrite schema type, default 'profile'
 
  * @typedef {Object} Options
  * @property {ContextSwitch} [contextSwitch] - An optional context switch configuration. If not defined, no context switch will be shown.
