@@ -1,5 +1,4 @@
 import groq from 'groq'
-import { useMemo } from 'react'
 import { definePlugin, useWorkspace, useCurrentUser, useDocumentStore, useClient } from 'sanity'
 import { Stack, Flex, Card, MenuButton, Button, Menu, MenuItem, ToastProvider, useToast, Badge } from '@sanity/ui'
 import { ChevronDownIcon } from '@sanity/icons/ChevronDown'
@@ -145,7 +144,7 @@ function useProfileContextValue({ defaultValue, options, profileKey, schemaType,
   const client = useClient({ apiVersion })
 
   const profileContextValue = useObservable(
-    useMemo(
+    React.useMemo(
       () =>
         documentStore
           .listenQuery(
