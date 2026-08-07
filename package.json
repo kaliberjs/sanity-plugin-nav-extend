@@ -1,6 +1,6 @@
 {
   "name": "@kaliber/sanity-plugin-nav-extend",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Extends the nav bar of Sanity Studio",
   "sideEffects": false,
   "publishConfig": {
@@ -25,7 +25,7 @@
     "package.json",
     "readme.md"
   ],
-  "devDependencies": { 
+  "devDependencies": {
     "@kaliber/eslint-plugin": "^2.1.2",
     "@kaliber/stylelint-plugin": "^2.1.1"
   },
