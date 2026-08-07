@@ -1,0 +1,10 @@
+nodeLinker: hoisted
+
+autoInstallPeers: false
+
+minimumReleaseAge: 2880 # 2 days
+minimumReleaseAgeExclude:
+  - '@kaliber/*'
+allowBuilds:
+  esbuild: false
+  unrs-resolver: false

@@ -21,22 +21,18 @@
   "main": "src/sanityPluginNavExtend.js",
   "files": [
     "src/**",
-    "sanity.json",
     "LICENSE",
     "package.json",
-    "readme.md",
-    "v2-incompatible.js"
+    "readme.md"
   ],
-  "dependencies": {
-    "@sanity/incompatible-plugin": "^1.0.4"
-  },
-  "devDependencies": {
-    "@kaliber/build": "^0.0.150"
+  "devDependencies": { 
+    "@kaliber/eslint-plugin": "^2.1.2",
+    "@kaliber/stylelint-plugin": "^2.1.1"
   },
   "peerDependencies": {
-    "@sanity/icons": "^3.3.0",
-    "@sanity/ui": "^2.8.0",
-    "groq": "^3.51.0",
-    "sanity": "^3.51.0"
+    "@sanity/icons": "^5.2.1",
+    "@sanity/ui": "^3.5.1",
+    "groq": "^6.0.0",
+    "sanity": "^6.0.0"
   }
 }
